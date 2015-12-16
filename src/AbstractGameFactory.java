@@ -1,6 +1,6 @@
 
-interface AbstractGameFactory 
+abstract class AbstractGameFactory 
 {
-	Chess createChess();
-	ChessBoard createChessBoard();
+	abstract Chess createChess();
+	abstract ChessBoard createChessBoard();
 }
