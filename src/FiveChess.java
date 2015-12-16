@@ -1,4 +1,4 @@
 
-class FiveChess {
+class FiveChess extends Chess {
 
 }

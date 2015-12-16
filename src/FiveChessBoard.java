@@ -1,0 +1,4 @@
+
+class FiveChessBoard extends ChessBoard  {
+
+}
