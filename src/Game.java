@@ -24,7 +24,9 @@ class Game
 	{
 		
 		FiveChess ff=new FiveChess();
-		ff.CheckLine();
+		ff.createFiveChess();
+		ff.changechess();
+		//ff.CheckLine();
 
 	}
 	
