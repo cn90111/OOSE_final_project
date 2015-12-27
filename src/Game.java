@@ -1,5 +1,3 @@
-import javax.swing.JFrame;
-
 
 class Game 
 {
@@ -11,22 +9,12 @@ class Game
 	
 	public static void main(String[] arg)
 	{
-		JFrame title = new JFrame("物件導向期末專題");
-		
-	}
-	
-	public void addElement()
-	{
-		
-	}
-	
-	public void visibleElement()
-	{
 		
 		FiveChess ff=new FiveChess();
 		ff.createFiveChess();
 		ff.changechess();
-		//ff.CheckLine();
+		ff.printchess();
+		ff.CheckLine();
 
 	}
 	
