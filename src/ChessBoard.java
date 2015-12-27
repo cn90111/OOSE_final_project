@@ -1,5 +1,5 @@
 
-class ChessBoard extends AbstractChessBoard
+abstract class ChessBoard extends AbstractChessBoard
 {
 
 	@Override

@@ -1,5 +1,5 @@
 
-public class Chess 
+public abstract class Chess 
 {
 	int color;
 }

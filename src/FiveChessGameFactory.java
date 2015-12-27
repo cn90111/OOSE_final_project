@@ -13,5 +13,11 @@ class FiveChessGameFactory extends AbstractGameFactory {
 		return new FiveChessBoard();
 	}
 
+	@Override
+	Rule createRule() {
+		// TODO Auto-generated method stub
+		return new FiveRule();
+	}
+
 	
 }
