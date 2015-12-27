@@ -1,13 +1,16 @@
 class FiveChess extends Chess {
 
 	int chessarrays[];
+	public static final int BLACK = 0;
+	public static final int WHITE = 1;
+	public static final int EMPTY = 2;
 
 	public void createFiveChess() {
 
 		chessarrays = new int[225];
 
 		for (int i = 0; i < 225; i++) {
-			chessarrays[i] = 2;
+			chessarrays[i] = EMPTY;
 		}
 
 	}
@@ -23,9 +26,15 @@ class FiveChess extends Chess {
 	}
 
 	public void changechess() {
-		for (int i = 48; i < 53; i++) {
-			chessarrays[i] = 0;
-		}
+		/*
+		 * for (int i = 48; i < 53; i++) { chessarrays[i] = 0; }
+		 */
+		chessarrays[20] = 0;
+		chessarrays[36] = 0;
+		chessarrays[52] = 0;
+		chessarrays[68] = 0;
+		chessarrays[84] = 0;
+
 	}
 
 	public void CheckLine() {
@@ -75,7 +84,7 @@ class FiveChess extends Chess {
 				}
 
 				if (canDoLeft1) {
-					if ((i - k) >= 0) {
+					if ((i + 1 - k) % 15 != 0) {
 						if (chessarrays[i] == chessarrays[i - k]
 								&& chessarrays[i] != 2) {
 							count1 = count1 + 1;
@@ -118,67 +127,79 @@ class FiveChess extends Chess {
 			}
 			// 4 check method-3
 			for (int k = 14; k <= 56; k = k + 14) {
-				if (canDoRU3) {
-					if ((i - k) >= 0) {
-						if (chessarrays[i] == chessarrays[i - k]
-								&& chessarrays[i] != 2) {
-							count3 = count3 + 1;
+				for (int j = 1; j <= 4; j++) {
+					if (canDoRU3) {
+						if ((i - k) >= 0 && (i + j) % 15 != 0) {
+							if (chessarrays[i] == chessarrays[i - k]
+									&& chessarrays[i] != 2) {
+								count3 = count3 + 1;
+							} else {
+								canDoRU3 = false;
+							}
 						} else {
 							canDoRU3 = false;
 						}
-					} else {
-						canDoRU3 = false;
 					}
 				}
-
-				if (canDoLD3) {
-					if ((i + k) <= 224) {
-						if (chessarrays[i] == chessarrays[i + k]
-								&& chessarrays[i] != 2) {
-							count3 = count3 + 1;
+				for (int j = 1; j <= 4; j++) {
+					if (canDoLD3) {
+						if ((i + k) <= 224 && (i + 1 - j) % 15 != 0) {
+							if (chessarrays[i] == chessarrays[i + k]
+									&& chessarrays[i] != 2) {
+								count3 = count3 + 1;
+							} else {
+								canDoLD3 = false;
+							}
 						} else {
 							canDoLD3 = false;
 						}
-					} else {
-						canDoLD3 = false;
 					}
+
 				}
 			}
 			// 4 check method-4
 			for (int k = 16; k <= 64; k = k + 16) {
-				if (canDoRD4) {
-					if ((i + k) <= 224) {
-						if (chessarrays[i] == chessarrays[i + k]
-								&& chessarrays[i] != 2) {
-							count4 = count4 + 1;
+				for (int j = 1; j <= 4; j++) {
+					if (canDoRD4) {
+						if ((i + k) <= 224 && (i + j) % 15 != 0) {
+							if (chessarrays[i] == chessarrays[i + k]
+									&& chessarrays[i] != 2) {
+								count4 = count4 + 1;
+							} else {
+								canDoRD4 = false;
+							}
 						} else {
 							canDoRD4 = false;
 						}
-					} else {
-						canDoRD4 = false;
 					}
 				}
 
-				if (canDoLU4) {
-					if ((i - k) >= 0) {
-						if (chessarrays[i] == chessarrays[i - k]
-								&& chessarrays[i] != 2) {
-							count4 = count4 + 1;
+				for (int j = 1; j <= 4; j++) {
+					if (canDoLU4) {
+						if ((i - k) >= 0) {
+							if (chessarrays[i] == chessarrays[i - k]
+									&& chessarrays[i] != 2) {
+								count4 = count4 + 1;
+							} else {
+								canDoLU4 = false;
+							}
 						} else {
 							canDoLU4 = false;
 						}
-					} else {
-						canDoLU4 = false;
+
 					}
 				}
 			}
 			// PRINT RESULT
 			if (count1 == 4 || count2 == 4 || count3 == 4 || count4 == 4) {
 				System.out.println("XX WIN!");
-                break;
+				break;
 			}
 		}
-		
+
 		System.out.println(count1);
+		System.out.println(count2);
+		System.out.println(count3);
+		System.out.println(count4);
 	}
 }
