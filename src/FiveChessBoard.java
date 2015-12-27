@@ -60,13 +60,13 @@ class FiveChessBoard extends ChessBoard implements ActionListener {
 				 if( fc.chessarrays[i] == 2){
 						switch (whoplayer) {
 						case 0:
-							fc.changechess(i, whoplayer);
+//							fc.changechess(i, whoplayer);
 							b[i].setIcon(new ImageIcon("BACK.png"));
 							b[i].setForeground(b[i].getBackground());
 							whoplayer = 1;
 							break;
 						case 1:
-							fc.changechess(i, whoplayer);
+//							fc.changechess(i, whoplayer);
 							b[i].setIcon(new ImageIcon("WHITE.png"));
 							b[i].setForeground(b[i].getBackground());
 							whoplayer = 0;

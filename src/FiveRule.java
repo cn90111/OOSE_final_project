@@ -8,10 +8,10 @@ public class FiveRule extends Rule
 		return false;
 	}
 
-	@Override
-	public void F1() {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void F1() {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 }
