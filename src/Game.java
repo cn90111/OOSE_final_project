@@ -53,6 +53,8 @@ class Game implements ActionListener
 		game.setElement();
 		game.addElement();
 		game.visibleElement();
+		
+		FiveChessBoard fcb = new FiveChessBoard();
 	}
 	
 	public void setElement()

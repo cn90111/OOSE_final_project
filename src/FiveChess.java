@@ -28,11 +28,11 @@ class FiveChess extends Chess {
 	public void changechess() {
 		
 
-		chessarrays[14] = 0;
-		chessarrays[30] = 0;
-		chessarrays[46] = 0;
-		chessarrays[62] = 0;
-		chessarrays[78] = 0;
+		chessarrays[0] = 0;
+		chessarrays[1] = 0;
+		chessarrays[2] = 0;
+		chessarrays[3] = 0;
+		chessarrays[4] = 0;
 
 		
 	}
@@ -206,7 +206,8 @@ class FiveChess extends Chess {
 
 			// PRINT RESULT
 			if (count1 == 4 || count2 == 4 || count3 == 4 || count4 == 4) {
-				System.out.println("XX WIN!");
+				
+					System.out.println("XX WIN!");
 				break;
 			}
 		}
