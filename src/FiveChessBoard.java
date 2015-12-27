@@ -17,7 +17,8 @@ import com.sun.corba.se.impl.ior.GenericTaggedComponent;
 class FiveChessBoard extends ChessBoard implements ActionListener {
 	int whoplayer = 0;
 	FiveChess fc = new FiveChess();
-
+	JButton[] b = new JButton[225];
+	
 	public FiveChessBoard() {
 		fc.createFiveChess();
 		JFrame demo = new JFrame();
@@ -33,16 +34,16 @@ class FiveChessBoard extends ChessBoard implements ActionListener {
 		panele.add(labele);
 		panelw.add(labelw);
 		labelc.setLayout(new GridLayout(15, 15));
-		// demo.add(panelw, BorderLayout.WEST);
-		// demo.add(panele, BorderLayout.EAST);
+//		 demo.add(panelw, BorderLayout.WEST);
+//		 demo.add(panele, BorderLayout.EAST);
 		demo.add(labelc, BorderLayout.CENTER);
 
 		for (int i = 0; i < 225; i++) {
-			JButton b = new JButton("" + (i + 1));
-			// b.setForeground(b.getBackground());
-			b.setActionCommand(""+(i+1));
-			labelc.add(b);
-			b.addActionListener(this);
+			b[i] = new JButton("" + (i + 1));
+			b[i].setForeground(b[i].getBackground());
+			b[i].setActionCommand(""+(i+1));
+			labelc.add(b[i]);
+			b[i].addActionListener(this);
 		}
 		demo.setVisible(true);
 	}
@@ -57,17 +58,21 @@ class FiveChessBoard extends ChessBoard implements ActionListener {
 					 System.out.println("下過惹");
 				 }
 				 if( fc.chessarrays[i] == 2){
-					 System.out.println("ds");
 						switch (whoplayer) {
 						case 0:
 							fc.changechess(i, whoplayer);
+							b[i].setBackground(Color.BLACK);
+							b[i].setForeground(b[i].getBackground());
 							whoplayer = 1;
 							break;
 						case 1:
 							fc.changechess(i, whoplayer);
+							b[i].setBackground(Color.WHITE);
+							b[i].setForeground(b[i].getBackground());
 							whoplayer = 0;
 							break;
 						}
+						fc.CheckLine();
 				}
 
 			}
