@@ -10,6 +10,9 @@ class Game
 	public static void main(String[] arg)
 	{
 		
+		FiveChess ff=new FiveChess();
+		ff.CheckLine();
+
 	}
 	
 	final void start()
