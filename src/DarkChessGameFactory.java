@@ -1,5 +1,5 @@
 
-public class DarkChessGameFactory implements AbstractGameFactory
+public class DarkChessGameFactory extends AbstractGameFactory
 {
 
 	@Override

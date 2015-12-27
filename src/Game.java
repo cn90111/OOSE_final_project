@@ -1,3 +1,5 @@
+import javax.swing.JFrame;
+
 
 class Game 
 {
@@ -8,6 +10,17 @@ class Game
 	static final int playersCount = 2;
 	
 	public static void main(String[] arg)
+	{
+		JFrame title = new JFrame("物件導向期末專題");
+		
+	}
+	
+	public void addElement()
+	{
+		
+	}
+	
+	public void visibleElement()
 	{
 		
 		FiveChess ff=new FiveChess();
