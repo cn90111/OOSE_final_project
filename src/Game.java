@@ -135,7 +135,7 @@ class Game implements ActionListener
 
 		FiveChess ff=new FiveChess();
 		ff.createFiveChess();
-		ff.changechess();
+		//ff.changechess();
 		ff.printchess();
 		ff.CheckLine();
 

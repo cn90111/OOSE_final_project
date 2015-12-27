@@ -23,10 +23,12 @@ class FiveChessBoard extends ChessBoard implements ActionListener {
 	JButton[] b = new JButton[225];
 	MenuItem  menured;
 	Menu menu,menucolor ;
+	JFrame demo;
 	public FiveChessBoard() {
 		fc.createFiveChess();
-		JFrame demo = new JFrame();
+		demo= new JFrame();
 		demo.setSize(750, 750);
+		
 		demo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		menucolor = new Menu("Color");
 		menured = new MenuItem("Red");
@@ -64,13 +66,18 @@ class FiveChessBoard extends ChessBoard implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		int a = Integer.parseInt(e.getActionCommand());
+		int a=-1;
+		try{
+		a = Integer.parseInt(e.getActionCommand());
+		} catch (Exception ex) {
+            System.out.println("something wrong");
+        }
 		//System.out.println(a);
 
 		for (int i = 0; i < 225; i++) {
 			if (a==((i+1))) {// 下過惹
 				 if( fc.chessarrays[i] == 0 || fc.chessarrays[i] == 1){
-					 System.out.println("下過惹");
+					 System.out.println("DONE");
 				 }
 				 if( fc.chessarrays[i] == 2){
 						switch (whoplayer) {
@@ -94,9 +101,13 @@ class FiveChessBoard extends ChessBoard implements ActionListener {
 
 		}
 		
-		 String s = e.getActionCommand();
-		 if(s.equals(menured)){
-			 System.out.println("ewew");
+		 String m = e.getActionCommand();
+		 //System.out.println(m);
+	        if (m.equals("Red")) {
+	        	for (int i = 0; i < 225; i++) {
+			 b[i].setBackground(Color.RED);
+			 b[i].setForeground(b[i].getBackground());
+	        	}
 		 }
 	}
 }
