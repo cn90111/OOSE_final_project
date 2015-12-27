@@ -88,6 +88,7 @@ class Game implements ActionListener
 		
 		DarkChessButton = new JButton(new ImageIcon("./image/darkChess.jpg"));
 		DarkChessButton.setText("darkChess");
+
 		DarkChessButton.setFont(new Font(null, 0, 20));
 		DarkChessButton.setVerticalTextPosition(SwingConstants.TOP);
 		DarkChessButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -103,6 +104,7 @@ class Game implements ActionListener
 //		ruleGameButton.setActionCommand("ruleGameButton");
 //		ruleGameButton.addActionListener(this);		
 		exitGameButton = new JButton("exit game");
+
 		exitGameButton.setFont(new Font(null, 0, 20));
 		exitGameButton.setActionCommand("exitGameButton");
 	}
@@ -128,7 +130,7 @@ class Game implements ActionListener
 	{
 		menu.setVisible(false);
 		title.setVisible(true);
-		
+
 		FiveChess ff=new FiveChess();
 		ff.createFiveChess();
 		ff.changechess();
