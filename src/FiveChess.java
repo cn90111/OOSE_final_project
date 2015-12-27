@@ -26,7 +26,6 @@ class FiveChess extends Chess {
 	}
 
 	public void changechess() {
-		
 
 		chessarrays[0] = 0;
 		chessarrays[1] = 0;
@@ -34,10 +33,15 @@ class FiveChess extends Chess {
 		chessarrays[3] = 0;
 		chessarrays[4] = 0;
 
-		
 	}
 
-	public void CheckLine() {
+	public void changechess(int i, int whoplayer) {
+		chessarrays[i] = whoplayer;
+		System.out.println("位置:" + (i + 1) + "玩家:" + whoplayer);
+		// printchess();
+	}
+
+	public void CheckLine(int whoplayer) {
 
 		int count1 = 0;
 		int count2 = 0;
@@ -206,15 +210,21 @@ class FiveChess extends Chess {
 
 			// PRINT RESULT
 			if (count1 == 4 || count2 == 4 || count3 == 4 || count4 == 4) {
-				
-					System.out.println("XX WIN!");
+
+				if (whoplayer == 0) {
+					System.out.println("player1 (white) WIN!");
+				}
+
+				if (whoplayer == 1) {
+					System.out.println("player2 (black) WIN!");
+				}
 				break;
 			}
 		}
 
-		System.out.println(count1);
-		System.out.println(count2);
-		System.out.println(count3);
-		System.out.println(count4);
+		// System.out.println(count1);
+		// System.out.println(count2);
+		// System.out.println(count3);
+		// System.out.println(count4);
 	}
 }
