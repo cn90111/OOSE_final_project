@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,6 +15,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+=======
+>>>>>>> origin/master
 
 class Game implements ActionListener
 {
@@ -49,6 +52,7 @@ class Game implements ActionListener
 	
 	public static void main(String[] arg)
 	{
+<<<<<<< HEAD
 		Game game=new Game();
 		
 		game.setElement();
@@ -126,6 +130,15 @@ class Game implements ActionListener
 	{
 		menu.setVisible(false);
 		title.setVisible(true);
+=======
+		
+		FiveChess ff=new FiveChess();
+		ff.createFiveChess();
+		ff.changechess();
+		ff.printchess();
+		ff.CheckLine();
+
+>>>>>>> origin/master
 	}
 	
 	final void start()
