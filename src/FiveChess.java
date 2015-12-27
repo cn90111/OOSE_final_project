@@ -29,11 +29,19 @@ class FiveChess extends Chess {
 		/*
 		 * for (int i = 48; i < 53; i++) { chessarrays[i] = 0; }
 		 */
-		chessarrays[20] = 0;
+		chessarrays[24] = 0;
+		chessarrays[38] = 0;
+		chessarrays[52] = 0;
+		chessarrays[66] = 0;
+		chessarrays[80] = 0;
+		
+		/* chessarrays[20] = 0;
 		chessarrays[36] = 0;
 		chessarrays[52] = 0;
 		chessarrays[68] = 0;
 		chessarrays[84] = 0;
+		 * 
+		 */
 
 	}
 
@@ -129,7 +137,7 @@ class FiveChess extends Chess {
 			for (int k = 14; k <= 56; k = k + 14) {
 				for (int j = 1; j <= 4; j++) {
 					if (canDoRU3) {
-						if ((i - k) >= 0 && (i + j) % 15 != 0) {
+						if ((i - k) >= 0 && ((i + j) % 15) != 0) {
 							if (chessarrays[i] == chessarrays[i - k]
 									&& chessarrays[i] != 2) {
 								count3 = count3 + 1;
@@ -143,7 +151,7 @@ class FiveChess extends Chess {
 				}
 				for (int j = 1; j <= 4; j++) {
 					if (canDoLD3) {
-						if ((i + k) <= 224 && (i + 1 - j) % 15 != 0) {
+						if ((i + k) <= 224 && ((i + 1 - j) % 15) != 0) {
 							if (chessarrays[i] == chessarrays[i + k]
 									&& chessarrays[i] != 2) {
 								count3 = count3 + 1;
@@ -186,7 +194,6 @@ class FiveChess extends Chess {
 						} else {
 							canDoLU4 = false;
 						}
-
 					}
 				}
 			}
