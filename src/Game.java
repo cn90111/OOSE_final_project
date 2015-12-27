@@ -71,12 +71,12 @@ class Game implements ActionListener
 		menu.setLayout(new GridLayout(5,1,0,0));
 		
 		eastPanel = new JPanel();
-		eastPanel.setBackground(Color.red);
+		//eastPanel.setBackground(Color.red);
 		eastPanel.setLayout(new BorderLayout());
 		eastPanel.setPreferredSize(new Dimension(X/2,Y));
 		
 		westPanel = new JPanel();
-		westPanel.setBackground(Color.blue);
+		//westPanel.setBackground(Color.blue);
 		westPanel.setLayout(new BorderLayout());
 		westPanel.setPreferredSize(new Dimension(X/2,Y));
 		
