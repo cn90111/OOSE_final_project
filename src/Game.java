@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,8 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-=======
->>>>>>> origin/master
+
 
 class Game implements ActionListener
 {
@@ -52,7 +51,7 @@ class Game implements ActionListener
 	
 	public static void main(String[] arg)
 	{
-<<<<<<< HEAD
+
 		Game game=new Game();
 		
 		game.setElement();
@@ -62,7 +61,7 @@ class Game implements ActionListener
 	
 	public void setElement()
 	{
-		title = new JFrame("物件導向期末專題");
+		title = new JFrame("�隞嗅���撠��");
 		title.setSize(X, Y);
 		title.setResizable(false);
 		title.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,31 +82,31 @@ class Game implements ActionListener
 		westPanel.setLayout(new BorderLayout());
 		westPanel.setPreferredSize(new Dimension(X/2,Y));
 		
-		FiveChessButton = new JButton(new ImageIcon("./image/五子棋.jpg"));
-		FiveChessButton.setText("五子棋");
+		FiveChessButton = new JButton(new ImageIcon("./image/鈭���.jpg"));
+		FiveChessButton.setText("鈭���");
 		FiveChessButton.setFont(new Font(null, 0, 20));
 		FiveChessButton.setVerticalTextPosition(SwingConstants.TOP);
 		FiveChessButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		FiveChessButton.setActionCommand("FiveChessButton");
 		FiveChessButton.addActionListener(this);
 		
-		DarkChessButton = new JButton(new ImageIcon("./image/暗棋.jpg"));
-		DarkChessButton.setText("暗棋");
+		DarkChessButton = new JButton(new ImageIcon("./image/����.jpg"));
+		DarkChessButton.setText("����");
 		DarkChessButton.setFont(new Font(null, 0, 20));
 		DarkChessButton.setVerticalTextPosition(SwingConstants.TOP);
 		DarkChessButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		DarkChessButton.setActionCommand("DarkChessButton");	
 		DarkChessButton.addActionListener(this);	
 		
-		startGameButton = new JButton("遊戲開始");
+		startGameButton = new JButton("������");
 		startGameButton.setFont(new Font(null, 0, 20));
 		startGameButton.setActionCommand("startGameButton");	
 		startGameButton.addActionListener(this);	
-		ruleGameButton = new JButton("遊戲規則");
+		ruleGameButton = new JButton("��閬��");
 		ruleGameButton.setFont(new Font(null, 0, 20));
 		ruleGameButton.setActionCommand("ruleGameButton");
 		startGameButton.addActionListener(this);		
-		exitGameButton = new JButton("離開遊戲");
+		exitGameButton = new JButton("����");
 		exitGameButton.setFont(new Font(null, 0, 20));
 		exitGameButton.setActionCommand("exitGameButton");
 	}
@@ -130,15 +129,14 @@ class Game implements ActionListener
 	{
 		menu.setVisible(false);
 		title.setVisible(true);
-=======
-		
+
 		FiveChess ff=new FiveChess();
 		ff.createFiveChess();
 		ff.changechess();
 		ff.printchess();
 		ff.CheckLine();
 
->>>>>>> origin/master
+
 	}
 	
 	final void start()
