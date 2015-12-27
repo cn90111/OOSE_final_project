@@ -49,7 +49,7 @@ class Game implements ActionListener
 	public static void main(String[] arg)
 	{
 		Game game=new Game();
-		
+		FiveChessBoard fcb = new FiveChessBoard();
 		game.setElement();
 		game.addElement();
 		game.visibleElement();

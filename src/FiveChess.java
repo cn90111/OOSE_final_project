@@ -25,17 +25,11 @@ class FiveChess extends Chess {
 		}
 	}
 
-	public void changechess() {
-		
-
-		chessarrays[14] = 0;
-		chessarrays[30] = 0;
-		chessarrays[46] = 0;
-		chessarrays[62] = 0;
-		chessarrays[78] = 0;
-
-		
-	}
+	public void changechess(int i, int whoplayer) {
+		chessarrays[i] = whoplayer;
+		System.out.println("位置:"+(i+1)+"玩家:"+whoplayer);
+		//printchess();
+}
 
 	public void CheckLine() {
 
@@ -211,9 +205,9 @@ class FiveChess extends Chess {
 			}
 		}
 
-		System.out.println(count1);
-		System.out.println(count2);
-		System.out.println(count3);
-		System.out.println(count4);
+//		System.out.println(count1);
+//		System.out.println(count2);
+//		System.out.println(count3);
+//		System.out.println(count4);
 	}
 }
