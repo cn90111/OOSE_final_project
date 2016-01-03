@@ -28,6 +28,8 @@ class FiveChessBoard extends ChessBoard implements ActionListener {
 		fc.createFiveChess();
 		demo= new JFrame();
 		demo.setSize(750, 750);
+		demo.setResizable(false);
+		demo.setLocationRelativeTo(null);
 		
 		demo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		menucolor = new Menu("Color");

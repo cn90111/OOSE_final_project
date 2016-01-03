@@ -6,11 +6,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javafx.scene.control.Button;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -18,6 +17,7 @@ class Game implements ActionListener
 {
 	Chess chess;
 	ChessBoard board;
+	Rule rule;
 	Player[] player;
 	AbstractGameFactory f;
 	static final int playersCount = 2;
@@ -25,18 +25,21 @@ class Game implements ActionListener
 	public static final int X = 750;
 	public static final int Y = 600;
 	
-	public static final int FiveGame = 1;
-	public static final int DarkGame = 2;
+	public static final int NO_SELECT_GAME = 0;
+	public static final int FIVE_GAME = 1;
+	public static final int DARK_GAME = 2;
 	
-	int falg; 
+	int falg = NO_SELECT_GAME; 
 	
 	JFrame title;
 	
 	JPanel menu;
 	JPanel eastPanel;
 	JPanel westPanel;
-//	JPanel northPanel;
-//	JPanel southtPanel;
+	
+	JPanel tempPanel1;
+	JPanel tempPanel2;
+	JPanel tempPanel3;
 	
 	JButton startGameButton;
 //	JButton ruleGameButton;
@@ -45,16 +48,60 @@ class Game implements ActionListener
 	JButton FiveChessButton;
 	JButton DarkChessButton;
 	
+	JLabel background = new JLabel();
+	
+
+	ImageIcon fiveChessimg = new ImageIcon("./image/fiveChessBig.jpg");
+	ImageIcon darkChessimg = new ImageIcon("./image/darkChessBig.jpg");
 	
 	public static void main(String[] arg)
 	{
 		Game game=new Game();
-		FiveChessBoard fcb = new FiveChessBoard();
 		game.setElement();
 		game.addElement();
 		game.visibleElement();
 		
+	}
 	
+
+	final void start()
+	{
+		initializaGame();
+//		int i = 0;
+//		
+//		while(!endOfGame())
+//		{
+//			makePlay(i);
+//			i = ( i+1 ) % playersCount;
+//		}
+//		
+//		printWinner();
+	}
+	
+	final void timeCount()
+	{
+		Timer timer = new Timer();
+		timer.start();
+	}
+	
+	void initializaGame()
+	{
+		chess = f.createChess();
+		board = f.createChessBoard();
+		rule = f.createRule();
+	}
+	void makePlay(int player)
+	{
+		
+	}
+	boolean endOfGame()
+	{
+		return false;
+		
+	}
+	void printWinner()
+	{
+		
 	}
 	
 	public void setElement()
@@ -69,16 +116,26 @@ class Game implements ActionListener
 		menu = new JPanel();
 		menu.setBackground(Color.yellow);
 		menu.setLayout(new GridLayout(5,1,0,0));
+		menu.setOpaque(false);
 		
 		eastPanel = new JPanel();
-		//eastPanel.setBackground(Color.red);
+		eastPanel.setBackground(Color.red);
 		eastPanel.setLayout(new BorderLayout());
 		eastPanel.setPreferredSize(new Dimension(X/2,Y));
+		eastPanel.setOpaque(false);
 		
 		westPanel = new JPanel();
-		//westPanel.setBackground(Color.blue);
+		westPanel.setBackground(Color.blue);
 		westPanel.setLayout(new BorderLayout());
 		westPanel.setPreferredSize(new Dimension(X/2,Y));
+		westPanel.setOpaque(false);
+		
+		tempPanel1 = new JPanel();
+		tempPanel1.setOpaque(false);
+		tempPanel2 = new JPanel();
+		tempPanel2.setOpaque(false);
+		tempPanel3 = new JPanel();
+		tempPanel3.setOpaque(false);
 		
 		FiveChessButton = new JButton(new ImageIcon("./image/fiveChess.jpg"));
 		FiveChessButton.setText("fiveChess");
@@ -106,19 +163,19 @@ class Game implements ActionListener
 //		ruleGameButton.setActionCommand("ruleGameButton");
 //		ruleGameButton.addActionListener(this);		
 		exitGameButton = new JButton("exit game");
-
 		exitGameButton.setFont(new Font(null, 0, 20));
 		exitGameButton.setActionCommand("exitGameButton");
+		exitGameButton.addActionListener(this);
 	}
 	
 	public void addElement()
 	{
-		menu.add(new JPanel());
+		menu.add(tempPanel1);
 		menu.add(startGameButton);
-		menu.add(new JPanel());
+		menu.add(tempPanel2);
 //		menu.add(ruleGameButton);
 		menu.add(exitGameButton);
-		menu.add(new JPanel());
+		menu.add(tempPanel3);
 		
 		eastPanel.add(FiveChessButton,BorderLayout.CENTER);
 		westPanel.add(DarkChessButton,BorderLayout.CENTER);
@@ -132,52 +189,6 @@ class Game implements ActionListener
 	{
 		menu.setVisible(false);
 		title.setVisible(true);
-
-		FiveChess ff=new FiveChess();
-		ff.createFiveChess();
-		//ff.changechess();
-		ff.printchess();
-		ff.CheckLine();
-
-	}
-	
-	final void start()
-	{
-		initializaGame();
-		int i = 0;
-		
-		while(!endOfGame())
-		{
-			makePlay(i);
-			i = ( i+1 ) % playersCount;
-		}
-		
-		printWinner();
-	}
-	
-	final void timeCount()
-	{
-		Timer timer = new Timer();
-		timer.start();
-	}
-	
-	void initializaGame()
-	{
-		chess = f.createChess();
-		board = f.createChessBoard();
-	}
-	void makePlay(int player)
-	{
-		
-	}
-	boolean endOfGame()
-	{
-		return false;
-		
-	}
-	void printWinner()
-	{
-		
 	}
 
 	@Override
@@ -197,7 +208,22 @@ class Game implements ActionListener
 				DarkChessButton.setVisible(false);
 				FiveChessButton.setVisible(false);
 				
-				falg = FiveGame;
+				falg = FIVE_GAME;
+
+				((JPanel)title.getContentPane()).setOpaque(false);
+				
+				if(background.getIcon() != null)
+				{
+					if(background.getIcon().equals(darkChessimg))
+					{
+						title.getLayeredPane().remove(background);
+					}
+				}
+				
+				background.setIcon(fiveChessimg);
+				title.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
+				background.setBounds(0, 0, fiveChessimg.getIconWidth(), fiveChessimg.getIconHeight());
+				
 				
 				break;
 			case "DarkChessButton":
@@ -209,28 +235,55 @@ class Game implements ActionListener
 				DarkChessButton.setVisible(false);
 				FiveChessButton.setVisible(false);
 				
-				falg = DarkGame;
+				falg = DARK_GAME;
+				
+
+				((JPanel)title.getContentPane()).setOpaque(false);
+				
+				if(background.getIcon() != null)
+				{
+					if(background.getIcon().equals(fiveChessimg))
+					{
+						title.getLayeredPane().remove(background);
+					}
+				}
+				
+				
+				background.setIcon(darkChessimg);
+				title.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
+				background.setBounds(0, 0, darkChessimg.getIconWidth(), darkChessimg.getIconHeight());
+
 				
 				break;
 			case "startGameButton":
 				
 				switch(falg)
 				{
-					case FiveGame:
+					case FIVE_GAME:
 						f = new FiveChessGameFactory();
 						break;
-					case DarkGame:
+					case DARK_GAME:
 						f = new DarkChessGameFactory();
 						break;
 				}
 				
-//				start();
+				start();
+				title.setVisible(false);
 				
 				break;
-			case "ruleGameButton":
-				
-				break;
+//			case "ruleGameButton":
+//				
+//				break;
 			case "exitGameButton":
+				
+				menu.setVisible(false);
+				eastPanel.setPreferredSize(new Dimension(X/2,Y));
+				westPanel.setPreferredSize(new Dimension(X/2,Y));
+
+				DarkChessButton.setVisible(true);
+				FiveChessButton.setVisible(true);
+				
+				falg = NO_SELECT_GAME;
 				
 				break;
 			
