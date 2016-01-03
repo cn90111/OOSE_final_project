@@ -42,7 +42,6 @@ class FiveChess extends Chess {
 
 	}
 	
-<<<<<<< HEAD
 	public void printwinner(int whoplayer){
 		JFrame winner=new JFrame();
 		winner.setSize(200, 80);
@@ -70,8 +69,6 @@ class FiveChess extends Chess {
 		
 		
 	}
-=======
->>>>>>> origin/master
 
 	public void changechess(int i, int whoplayer) {
 		chessarrays[i] = whoplayer;

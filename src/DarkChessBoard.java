@@ -31,6 +31,7 @@ public class DarkChessBoard extends ChessBoard implements ActionListener
 	boolean firstOpen = false;
 	
 	int clickConut = 0;
+	int firstTemp = 0;
 	
 	int flag;
 	
@@ -61,6 +62,14 @@ public class DarkChessBoard extends ChessBoard implements ActionListener
 	
 	private void printChess()
 	{
+//		for (int i = 0; i < 32; i++) {
+//			System.out.print(darkChess.weight[i] + " ");
+//
+//			if ((i + 1) % 8 == 0) {
+//				System.out.println("");
+//			}
+//		}
+//		
 		for(int i=0 ; i<32 ; i++)
 		{
 			
@@ -138,6 +147,7 @@ public class DarkChessBoard extends ChessBoard implements ActionListener
 				}
 			}
 		}
+		
 	}
 	
 	public void setElement()
@@ -179,7 +189,14 @@ public class DarkChessBoard extends ChessBoard implements ActionListener
 	public int getColor(int temp)
 	{
 		//System.out.println(darkChess.chessarrays[temp]/16);
-		return darkChess.chessarrays[temp]/16 == 0?BLACK:RED;
+		if(darkChess.chessarrays[temp] == darkChess.EMPTY)
+		{
+			return darkChess.EMPTY;
+		}
+		else
+		{
+			return darkChess.chessarrays[temp]/16 == 0?BLACK:RED;
+		}
 	}
 
 	@Override
@@ -188,7 +205,6 @@ public class DarkChessBoard extends ChessBoard implements ActionListener
 		// TODO Auto-generated method stub
 		int temp;
 		temp = Integer.parseInt(arg0.getActionCommand());
-		int firstTemp = 0;
 		
 		//設定玩家的顏色
 		if(firstOpen == false)
@@ -226,40 +242,65 @@ public class DarkChessBoard extends ChessBoard implements ActionListener
 						firstTemp = temp;
 						clickConut++;
 					}
-					else //別人的棋子
+					else if(getColor(temp) == playerColor[NextPlayer])//別人的棋子
 					{
 						
+					}
+					else if(getColor(temp) == darkChess.EMPTY)//空白格子
+					{
+						
+					}
+					else
+					{
+						System.out.println("Bug出現");
 					}
 				}
 				break;
 			case 1:
 				if(darkChess.isOpen[temp] == false) // 如果還沒翻開
 				{
-					clickConut = 0;
-					System.out.println("取消動作");
+					System.out.println("未翻開，取消動作");
 				}
 				else //點別的棋子
 				{
 					if(getColor(temp) == playerColor[NowPlayer])//自己的棋子
 					{
-						clickConut = 0;
-						System.out.println("取消動作");
+						System.out.println("不能吃自己的棋，取消動作");
 					}
-					else //別人的棋子
+					else if(getColor(temp) == playerColor[NextPlayer])//別人的棋子
 					{
-						if(darkChess.weight[firstTemp] < darkChess.weight[temp])
+						//System.out.println("firstTemp:" + firstTemp);
+						if(darkChess.weight[firstTemp] <= darkChess.weight[temp])//越小越大
 						{
-							darkChess.chessarrays[firstTemp] =
-									darkChess.chessarrays[temp];
-							darkChess.weight[firstTemp] =
-									darkChess.weight[temp];
-							darkChess.chessarrays[temp] = darkChess.EMPTY;
-							darkChess.weight[temp] = darkChess.EMPTY;
+							darkChess.chessarrays[temp] =
+									darkChess.chessarrays[firstTemp];
+							darkChess.weight[temp] =
+									darkChess.weight[firstTemp];
+							darkChess.chessarrays[firstTemp] = darkChess.EMPTY;
+							darkChess.weight[firstTemp] = darkChess.EMPTY;
 							changePlayer = true;
 							System.out.println("可以吃");
 						}
 					}
+					else if(getColor(temp) == DarkChess.EMPTY)
+					{
+						darkChess.chessarrays[temp] =
+								darkChess.chessarrays[firstTemp];
+						darkChess.weight[temp] =
+								darkChess.weight[firstTemp];
+						darkChess.chessarrays[firstTemp] = darkChess.EMPTY;
+						darkChess.weight[firstTemp] = darkChess.EMPTY;
+						changePlayer = true;
+						System.out.println("往空地移動");
+					}
+					else
+					{
+						System.out.println("Bug出現");
+					}
 				}
+				
+				clickConut = 0;
+				
 				break;
 		}
 		
