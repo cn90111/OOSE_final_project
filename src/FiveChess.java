@@ -42,7 +42,7 @@ class FiveChess extends Chess {
 	
 	public void printwinner(int whoplayer){
 		JFrame winner=new JFrame();
-		winner.setSize(150, 80);
+		winner.setSize(200, 80);
 		winner.setVisible(true);
 		winner.setLocationRelativeTo(null);
 		winner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,9 +50,11 @@ class FiveChess extends Chess {
 		
 		
 		JPanel winnerPanel=new JPanel();
+		JPanel buttonPanel=new JPanel();
 		JLabel winnerLabel=new JLabel();
 		winnerPanel.add(winnerLabel);
 		winner.add(winnerPanel);
+		winner.add(buttonPanel);
 		
 		if (whoplayer == 0) {
 			
