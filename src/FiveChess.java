@@ -1,3 +1,8 @@
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 class FiveChess extends Chess {
 
 	int chessarrays[];
@@ -33,6 +38,32 @@ class FiveChess extends Chess {
 		chessarrays[3] = 0;
 		chessarrays[4] = 0;
 
+	}
+	
+	public void printwinner(int whoplayer){
+		JFrame winner=new JFrame();
+		winner.setSize(150, 80);
+		winner.setVisible(true);
+		winner.setLocationRelativeTo(null);
+		winner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		winner.setResizable(false);
+		
+		
+		JPanel winnerPanel=new JPanel();
+		JLabel winnerLabel=new JLabel();
+		winnerPanel.add(winnerLabel);
+		winner.add(winnerPanel);
+		
+		if (whoplayer == 0) {
+			
+			 winnerLabel.setText("player1 (white) WIN!");
+		}
+
+		else if (whoplayer == 1) {
+			 winnerLabel.setText("player2 (black) WIN!");
+		}
+		
+		
 	}
 
 	public void changechess(int i, int whoplayer) {
@@ -73,7 +104,7 @@ class FiveChess extends Chess {
 			canDoLU4 = true;
 
 			// 4 check method-1
-			for (int k = 1; k <= 4; k++) {
+			for (int k = 1; k <= 6; k++) {
 				if (canDoRight1) {
 					if ((i + k) % 15 != 0) {
 						if (chessarrays[i] == chessarrays[i + k]
@@ -101,7 +132,7 @@ class FiveChess extends Chess {
 			}
 
 			// 4 check method-2
-			for (int k = 15; k <= 60; k = k + 15) {
+			for (int k = 15; k <= 90; k = k + 15) {
 				if (canDoUp2) {
 					if ((i - k) >= 0) {
 						if (chessarrays[i] == chessarrays[i - k]
@@ -129,7 +160,7 @@ class FiveChess extends Chess {
 				}
 			}
 			// 4 check method-3
-			for (int k = 14; k <= 56; k = k + 14) {
+			for (int k = 14; k <= 84; k = k + 14) {
 
 				if (canDoRU3) {
 
@@ -169,7 +200,7 @@ class FiveChess extends Chess {
 				}
 			}
 			// 4 check method-4
-			for (int k = 16; k <= 64; k = k + 16) {
+			for (int k = 16; k <= 96; k = k + 16) {
 
 				if (canDoRD4) {
 					if (((i + k) <= 224) && (((i - 14) % 15) != 0)) {
@@ -212,11 +243,14 @@ class FiveChess extends Chess {
 			if (count1 == 4 || count2 == 4 || count3 == 4 || count4 == 4) {
 
 				if (whoplayer == 0) {
+					printwinner(whoplayer);
 					System.out.println("player1 (white) WIN!");
+					
 				}
 
 				if (whoplayer == 1) {
 					System.out.println("player2 (black) WIN!");
+					printwinner(whoplayer);
 				}
 				break;
 			}
