@@ -1,15 +1,18 @@
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 class FiveChess extends Chess {
-
 	int chessarrays[];
+	boolean win=false;
 	public static final int BLACK = 0;
 	public static final int WHITE = 1;
 	public static final int EMPTY = 2;
-
 	public void createFiveChess() {
 
 		chessarrays = new int[225];
@@ -17,7 +20,6 @@ class FiveChess extends Chess {
 		for (int i = 0; i < 225; i++) {
 			chessarrays[i] = EMPTY;
 		}
-
 	}
 
 	public void printchess() {
@@ -40,31 +42,6 @@ class FiveChess extends Chess {
 
 	}
 	
-	public void printwinner(int whoplayer){
-		JFrame winner=new JFrame();
-		winner.setSize(150, 80);
-		winner.setVisible(true);
-		winner.setLocationRelativeTo(null);
-		winner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		winner.setResizable(false);
-		
-		
-		JPanel winnerPanel=new JPanel();
-		JLabel winnerLabel=new JLabel();
-		winnerPanel.add(winnerLabel);
-		winner.add(winnerPanel);
-		
-		if (whoplayer == 0) {
-			
-			 winnerLabel.setText("player1 (white) WIN!");
-		}
-
-		else if (whoplayer == 1) {
-			 winnerLabel.setText("player2 (black) WIN!");
-		}
-		
-		
-	}
 
 	public void changechess(int i, int whoplayer) {
 		chessarrays[i] = whoplayer;
@@ -243,14 +220,16 @@ class FiveChess extends Chess {
 			if (count1 == 4 || count2 == 4 || count3 == 4 || count4 == 4) {
 
 				if (whoplayer == 0) {
-					printwinner(whoplayer);
+//					printwinner(whoplayer);
+					win=true;
 					System.out.println("player1 (white) WIN!");
 					
 				}
 
 				if (whoplayer == 1) {
+					win=true;
 					System.out.println("player2 (black) WIN!");
-					printwinner(whoplayer);
+//					printwinner(whoplayer);
 				}
 				break;
 			}
