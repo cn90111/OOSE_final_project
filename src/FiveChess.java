@@ -42,7 +42,36 @@ class FiveChess extends Chess {
 
 	}
 	
+<<<<<<< HEAD
+	public void printwinner(int whoplayer){
+		JFrame winner=new JFrame();
+		winner.setSize(200, 80);
+		winner.setVisible(true);
+		winner.setLocationRelativeTo(null);
+		winner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		winner.setResizable(false);
+		
+		
+		JPanel winnerPanel=new JPanel();
+		JPanel buttonPanel=new JPanel();
+		JLabel winnerLabel=new JLabel();
+		winnerPanel.add(winnerLabel);
+		winner.add(winnerPanel);
+		winner.add(buttonPanel);
+		
+		if (whoplayer == 0) {
+			
+			 winnerLabel.setText("player1 (white) WIN!");
+		}
 
+		else if (whoplayer == 1) {
+			 winnerLabel.setText("player2 (black) WIN!");
+		}
+		
+		
+	}
+=======
+>>>>>>> origin/master
 
 	public void changechess(int i, int whoplayer) {
 		chessarrays[i] = whoplayer;
