@@ -21,9 +21,10 @@ class FiveChessBoard extends ChessBoard implements ActionListener {
 	int whoplayer = 0;
 	FiveChess fc = new FiveChess();
 	JButton[] b = new JButton[225];
-	MenuItem  menured;
+	MenuItem  menured, menuDefault, menuGreen, menuBlue;
 	Menu menu,menucolor ;
 	JFrame demo;
+	JFrame winner;
 	public FiveChessBoard() {
 		fc.createFiveChess();
 		demo= new JFrame();
@@ -34,6 +35,9 @@ class FiveChessBoard extends ChessBoard implements ActionListener {
 		demo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		menucolor = new Menu("Color");
 		menured = new MenuItem("Red");
+		menuDefault = new MenuItem("Default");
+		menuGreen = new MenuItem("Green");
+		menuBlue = new MenuItem("Blue");
 		JPanel labelc = new JPanel();
 		JPanel panele = new JPanel();
 		JPanel panelw = new JPanel();
@@ -50,15 +54,22 @@ class FiveChessBoard extends ChessBoard implements ActionListener {
 		menu = new Menu("menu");
 		menucolor.addActionListener(this);
 		menured.addActionListener(this);
+		menuDefault.addActionListener(this);
+		menuGreen.addActionListener(this);
+		menuBlue.addActionListener(this);
 		MenuBar menubar = new MenuBar();
         menubar.add(menu);
         //menu.addSeparator();
-        menucolor.add(menured);
         menu.add(menucolor);
+        menucolor.add(menuDefault);
+        menucolor.add(menured);
+        menucolor.add(menuGreen);
+        menucolor.add(menuBlue);
         demo.setMenuBar(menubar);
         //
 		for (int i = 0; i < 225; i++) {
 			b[i] = new JButton("" + (i + 1));
+			b[i].setBackground(Color.white);
 			b[i].setForeground(b[i].getBackground());
 			b[i].setActionCommand(""+(i+1));
 			labelc.add(b[i]);
@@ -66,13 +77,57 @@ class FiveChessBoard extends ChessBoard implements ActionListener {
 		}
 		demo.setVisible(true);
 	}
+	public void stopgame(){
+		for (int i = 0; i < 225; i++) {
+		b[i].setEnabled(false);
+		b[i].setText(" ");
+		}
+	}
+	
 
+	public void printwinner(int whoplayer){
+		fc.win=true;
+		winner=new JFrame();
+		winner.setSize(300, 100);
+		winner.setVisible(true);
+		winner.setLocationRelativeTo(null);
+		winner.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		winner.setResizable(false);
+		JPanel winnerPanel=new JPanel();
+		JLabel winnerLabel=new JLabel();
+		JLabel winnerLabel2= new JLabel();
+		JButton c = new JButton("Restart");
+		JButton d = new JButton("MainView");
+		JButton e = new JButton("EndGame");
+		winner.setLayout(new GridLayout(2, 1));
+		winnerPanel.add(winnerLabel);
+		winner.add(winnerPanel);
+		winnerLabel2.setLayout(new GridLayout(1, 3));
+		winnerLabel2.add(c);
+		winnerLabel2.add(d);
+		winnerLabel2.add(e);
+		winner.add(winnerLabel2);
+		c.addActionListener(this);
+		d.addActionListener(this);
+		e.addActionListener(this);
+		
+		if (whoplayer == 0) {
+			 winnerLabel.setText("player1 (white) WIN!");
+		}
+
+		else if (whoplayer == 1) {
+			 winnerLabel.setText("player2 (black) WIN!");
+		}
+		
+		
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		int a=-1;
 		try{
 		a = Integer.parseInt(e.getActionCommand());
 		} catch (Exception ex) {
-            System.out.println("something wrong");
+            //System.out.println("something wrong");
         }
 		//System.out.println(a);
 
@@ -97,6 +152,10 @@ class FiveChessBoard extends ChessBoard implements ActionListener {
 							break;
 						}
 						fc.CheckLine(whoplayer);
+						if(fc.win==true){
+							printwinner(whoplayer);
+							stopgame();
+						}
 				}
 
 			}
@@ -105,11 +164,49 @@ class FiveChessBoard extends ChessBoard implements ActionListener {
 		
 		 String m = e.getActionCommand();
 		 //System.out.println(m);
+		 	if(m.equals("Restart")){
+		 		demo.dispose();
+		 		winner.dispose();
+		 		Game game = new Game();
+		 		game.f = new FiveChessGameFactory();
+		 		game.start();
+		 	}
+		 	if(m.equals("MainView")){
+		 		demo.dispose();
+		 		winner.dispose();
+		 		Game game = new Game();
+				game.setElement();
+				game.addElement();
+				game.visibleElement();
+		 	}
+		 	if(m.equals("EndGame")){
+		 		demo.dispose();
+		 		winner.dispose();
+		 	}
+		 	
 	        if (m.equals("Red")) {
 	        	for (int i = 0; i < 225; i++) {
 			 b[i].setBackground(Color.RED);
 			 b[i].setForeground(b[i].getBackground());
 	        	}
 		 }
+	        if(m.equals("Default")){
+	        	for (int i = 0; i < 225; i++) {
+			 b[i].setBackground(Color.WHITE);
+			 b[i].setForeground(b[i].getBackground());
+	        	}
+	        }
+	        if(m.equals("Green")){
+	        	for (int i = 0; i < 225; i++) {
+			 b[i].setBackground(Color.GREEN);
+			 b[i].setForeground(b[i].getBackground());
+	        	}
+	        }
+	        if(m.equals("Blue")){
+	        	for (int i = 0; i < 225; i++) {
+			 b[i].setBackground(Color.BLUE);
+			 b[i].setForeground(b[i].getBackground());
+	        	}
+	        }
 	}
 }
