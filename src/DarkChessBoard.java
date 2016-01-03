@@ -64,7 +64,7 @@ public class DarkChessBoard extends ChessBoard implements ActionListener
 		for(int i=0 ; i<32 ; i++)
 		{
 			
-			if(darkChess.chessarrays[i] == -1)
+			if(darkChess.chessarrays[i] == darkChess.EMPTY)
 			{
 				button[i].setIcon(null);
 			}
@@ -178,6 +178,7 @@ public class DarkChessBoard extends ChessBoard implements ActionListener
 	
 	public int getColor(int temp)
 	{
+		//System.out.println(darkChess.chessarrays[temp]/16);
 		return darkChess.chessarrays[temp]/16 == 0?BLACK:RED;
 	}
 
@@ -206,6 +207,8 @@ public class DarkChessBoard extends ChessBoard implements ActionListener
 			firstOpen = true;
 		}
 		
+//		System.out.println(playerColor[NowPlayer]);
+		
 		switch(clickConut)
 		{
 			case 0:
@@ -213,11 +216,13 @@ public class DarkChessBoard extends ChessBoard implements ActionListener
 				{
 					darkChess.isOpen[temp] = true;
 					changePlayer = true;
+					System.out.println("翻棋");
 				}
 				else //點別的棋子
 				{
 					if(getColor(temp) == playerColor[NowPlayer])//自己的棋子，判斷有後續動作
 					{
+						System.out.println("自己的棋子，有後續動作");
 						firstTemp = temp;
 						clickConut++;
 					}
@@ -231,17 +236,26 @@ public class DarkChessBoard extends ChessBoard implements ActionListener
 				if(darkChess.isOpen[temp] == false) // 如果還沒翻開
 				{
 					clickConut = 0;
+					System.out.println("取消動作");
 				}
 				else //點別的棋子
 				{
 					if(getColor(temp) == playerColor[NowPlayer])//自己的棋子
 					{
 						clickConut = 0;
+						System.out.println("取消動作");
 					}
 					else //別人的棋子
 					{
 						if(darkChess.weight[firstTemp] < darkChess.weight[temp])
 						{
+							darkChess.chessarrays[firstTemp] =
+									darkChess.chessarrays[temp];
+							darkChess.weight[firstTemp] =
+									darkChess.weight[temp];
+							darkChess.chessarrays[temp] = darkChess.EMPTY;
+							darkChess.weight[temp] = darkChess.EMPTY;
+							changePlayer = true;
 							System.out.println("可以吃");
 						}
 					}
@@ -260,10 +274,14 @@ public class DarkChessBoard extends ChessBoard implements ActionListener
 				case PLAYER1:
 					NowPlayer = PLAYER2;
 					NextPlayer = PLAYER1;
+					changePlayer = false;
+					System.out.println("現在輪到玩家2");
 					break;
 				case PLAYER2:
 					NowPlayer = PLAYER1;
 					NextPlayer = PLAYER2;
+					changePlayer = false;
+					System.out.println("現在輪到玩家1");
 					break;	
 			}
 		}
