@@ -1,5 +1,0 @@
-
-interface Action 
-{
-	void doAction();
-}

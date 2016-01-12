@@ -10,15 +10,13 @@ import javax.swing.JTextField;
 class FiveChess extends Chess {
 	int chessarrays[];
 	boolean win=false;
-	public static final int BLACK = 0;
-	public static final int WHITE = 1;
-	public static final int EMPTY = 2;
+	
 	public void createFiveChess() {
 
 		chessarrays = new int[225];
 
 		for (int i = 0; i < 225; i++) {
-			chessarrays[i] = EMPTY;
+			chessarrays[i] = Chess.EMPTY;
 		}
 	}
 
@@ -58,12 +56,12 @@ class FiveChess extends Chess {
 		winner.add(winnerPanel);
 		winner.add(buttonPanel);
 		
-		if (whoplayer == 0) {
+		if (whoplayer == Chess.White) {
 			
 			 winnerLabel.setText("player1 (white) WIN!");
 		}
 
-		else if (whoplayer == 1) {
+		else if (whoplayer == Chess.BLACK) {
 			 winnerLabel.setText("player2 (black) WIN!");
 		}
 		
@@ -112,7 +110,7 @@ class FiveChess extends Chess {
 				if (canDoRight1) {
 					if ((i + k) % 15 != 0) {
 						if (chessarrays[i] == chessarrays[i + k]
-								&& chessarrays[i] != 2) {
+								&& chessarrays[i] != Chess.EMPTY) {
 							count1 = count1 + 1;
 						} else {
 							canDoRight1 = false;
@@ -124,7 +122,7 @@ class FiveChess extends Chess {
 				if (canDoLeft1) {
 					if ((i + 1 - k) % 15 != 0) {
 						if (chessarrays[i] == chessarrays[i - k]
-								&& chessarrays[i] != 2) {
+								&& chessarrays[i] != Chess.EMPTY) {
 							count1 = count1 + 1;
 						} else {
 							canDoLeft1 = false;
@@ -140,7 +138,7 @@ class FiveChess extends Chess {
 				if (canDoUp2) {
 					if ((i - k) >= 0) {
 						if (chessarrays[i] == chessarrays[i - k]
-								&& chessarrays[i] != 2) {
+								&& chessarrays[i] != Chess.EMPTY) {
 							count2 = count2 + 1;
 						} else {
 							canDoUp2 = false;
@@ -153,7 +151,7 @@ class FiveChess extends Chess {
 				if (canDoDown2) {
 					if ((i + k) <= 224) {
 						if (chessarrays[i] == chessarrays[i + k]
-								&& chessarrays[i] != 2) {
+								&& chessarrays[i] != Chess.EMPTY) {
 							count2 = count2 + 1;
 						} else {
 							canDoDown2 = false;
@@ -170,7 +168,7 @@ class FiveChess extends Chess {
 
 					if (((i - k) > 0) && (((i - 14) % 15) != 0)) {
 						if (chessarrays[i] == chessarrays[i - k]
-								&& chessarrays[i] != 2) {
+								&& chessarrays[i] != Chess.EMPTY) {
 							if ((i - k) % 15 != 0) {
 								count3 = count3 + 1;
 							} else {
@@ -188,7 +186,7 @@ class FiveChess extends Chess {
 				if (canDoLD3) {
 					if ((((i + k) < 224) && ((i % 15) != 0))) {
 						if (chessarrays[i] == chessarrays[i + k]
-								&& chessarrays[i] != 2) {
+								&& chessarrays[i] != Chess.EMPTY) {
 							if ((i + k) % 15 != 0) {
 								count3 = count3 + 1;
 							} else {
@@ -209,7 +207,7 @@ class FiveChess extends Chess {
 				if (canDoRD4) {
 					if (((i + k) <= 224) && (((i - 14) % 15) != 0)) {
 						if (chessarrays[i] == chessarrays[i + k]
-								&& chessarrays[i] != 2) {
+								&& chessarrays[i] != Chess.EMPTY) {
 							if (((i + k) % 15) != 0) {
 								count4 = count4 + 1;
 							} else {
@@ -227,7 +225,7 @@ class FiveChess extends Chess {
 				if (canDoLU4) {
 					if (((i - k) >= 0) && ((i % 15) != 0)) {
 						if (chessarrays[i] == chessarrays[i - k]
-								&& chessarrays[i] != 2) {
+								&& chessarrays[i] != Chess.EMPTY) {
 							if (((i - k - 14) % 15) != 0) {
 								count4 = count4 + 1;
 							} else {
@@ -246,14 +244,14 @@ class FiveChess extends Chess {
 			// PRINT RESULT
 			if (count1 == 4 || count2 == 4 || count3 == 4 || count4 == 4) {
 
-				if (whoplayer == 0) {
+				if (whoplayer == Chess.White) {
 //					printwinner(whoplayer);
 					win=true;
 					System.out.println("player1 (white) WIN!");
 					
 				}
 
-				if (whoplayer == 1) {
+				if (whoplayer == Chess.BLACK) {
 					win=true;
 					System.out.println("player2 (black) WIN!");
 //					printwinner(whoplayer);
@@ -261,10 +259,5 @@ class FiveChess extends Chess {
 				break;
 			}
 		}
-
-		// System.out.println(count1);
-		// System.out.println(count2);
-		// System.out.println(count3);
-		// System.out.println(count4);
 	}
 }

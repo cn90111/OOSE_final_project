@@ -18,10 +18,4 @@ public class DarkChessGameFactory extends AbstractGameFactory
 		return new DarkChessBoard();
 	}
 
-	@Override
-	Rule createRule() {
-		// TODO Auto-generated method stub
-		return new DarkRule();
-	}
-
 }

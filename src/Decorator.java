@@ -8,10 +8,21 @@ abstract class Decorator extends AbstractChessBoard
 		this.temp = temp;
 	}
 	
-	void checkPoint()
+	boolean checkPoint(int[] board, int point)
 	{
-		temp.checkPoint();
+		return temp.checkPoint(board,point);
+	}
+	
+	void setChess(Chess chess)
+	{
+		temp.setChess(chess);
+	}
+	
+	void setFactory(AbstractGameFactory f)
+	{
+		temp.setFactory(f);
 	}
 	
 	abstract void addedBehavior();
+	
 }

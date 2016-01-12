@@ -17,7 +17,6 @@ class Game implements ActionListener
 {
 	Chess chess;
 	ChessBoard board;
-	Rule rule;
 	Player[] player;
 	AbstractGameFactory f;
 	static final int playersCount = 2;
@@ -42,7 +41,6 @@ class Game implements ActionListener
 	JPanel tempPanel3;
 	
 	JButton startGameButton;
-//	JButton ruleGameButton;
 	JButton exitGameButton;
 	
 	JButton FiveChessButton;
@@ -51,8 +49,8 @@ class Game implements ActionListener
 	JLabel background = new JLabel();
 	
 
-	ImageIcon fiveChessimg = new ImageIcon("./image/fiveChessBig.jpg");
-	ImageIcon darkChessimg = new ImageIcon("./image/darkChessBig.jpg");
+	ImageIcon fiveChessimg = new ImageIcon("./fiveChessBig.jpg");
+	ImageIcon darkChessimg = new ImageIcon("./darkChessBig.jpg");
 	
 	public static void main(String[] arg)
 	{
@@ -67,41 +65,16 @@ class Game implements ActionListener
 	final void start()
 	{
 		initializaGame();
-//		int i = 0;
-//		
-//		while(!endOfGame())
-//		{
-//			makePlay(i);
-//			i = ( i+1 ) % playersCount;
-//		}
-//		
-//		printWinner();
 	}
 	
-	final void timeCount()
-	{
-		Timer timer = new Timer();
-		timer.start();
-	}
 	
 	void initializaGame()
 	{
 		chess = f.createChess();
 		board = f.createChessBoard();
-		rule = f.createRule();
-	}
-	void makePlay(int player)
-	{
-		
-	}
-	boolean endOfGame()
-	{
-		return false;
-		
-	}
-	void printWinner()
-	{
-		
+		ColorChessBoard colorChessBoard = new ColorChessBoard(board);
+		colorChessBoard.setChess(chess);
+		colorChessBoard.setFactory(f);
 	}
 	
 	public void setElement()
@@ -137,7 +110,7 @@ class Game implements ActionListener
 		tempPanel3 = new JPanel();
 		tempPanel3.setOpaque(false);
 		
-		FiveChessButton = new JButton(new ImageIcon("./image/fiveChess.jpg"));
+		FiveChessButton = new JButton(new ImageIcon("./fiveChess.jpg"));
 		FiveChessButton.setText("fiveChess");
 		FiveChessButton.setFont(new Font(null, 0, 20));
 		FiveChessButton.setVerticalTextPosition(SwingConstants.TOP);
@@ -145,7 +118,7 @@ class Game implements ActionListener
 		FiveChessButton.setActionCommand("FiveChessButton");
 		FiveChessButton.addActionListener(this);
 		
-		DarkChessButton = new JButton(new ImageIcon("./image/darkChess.jpg"));
+		DarkChessButton = new JButton(new ImageIcon("./darkChess.jpg"));
 		DarkChessButton.setText("darkChess");
 
 		DarkChessButton.setFont(new Font(null, 0, 20));
@@ -157,11 +130,7 @@ class Game implements ActionListener
 		startGameButton = new JButton("game start");
 		startGameButton.setFont(new Font(null, 0, 20));
 		startGameButton.setActionCommand("startGameButton");	
-		startGameButton.addActionListener(this);	
-//		ruleGameButton = new JButton("遊戲規則");
-//		ruleGameButton.setFont(new Font(null, 0, 20));
-//		ruleGameButton.setActionCommand("ruleGameButton");
-//		ruleGameButton.addActionListener(this);		
+		startGameButton.addActionListener(this);
 		exitGameButton = new JButton("exit game");
 		exitGameButton.setFont(new Font(null, 0, 20));
 		exitGameButton.setActionCommand("exitGameButton");
@@ -173,7 +142,6 @@ class Game implements ActionListener
 		menu.add(tempPanel1);
 		menu.add(startGameButton);
 		menu.add(tempPanel2);
-//		menu.add(ruleGameButton);
 		menu.add(exitGameButton);
 		menu.add(tempPanel3);
 		
@@ -214,10 +182,8 @@ class Game implements ActionListener
 				
 				if(background.getIcon() != null)
 				{
-					if(background.getIcon().equals(darkChessimg))
-					{
-						title.getLayeredPane().remove(background);
-					}
+					title.getLayeredPane().remove(background);
+					
 				}
 				
 				background.setIcon(fiveChessimg);
@@ -242,10 +208,7 @@ class Game implements ActionListener
 				
 				if(background.getIcon() != null)
 				{
-					if(background.getIcon().equals(fiveChessimg))
-					{
-						title.getLayeredPane().remove(background);
-					}
+					title.getLayeredPane().remove(background);
 				}
 				
 				
@@ -271,9 +234,6 @@ class Game implements ActionListener
 				title.setVisible(false);
 				
 				break;
-//			case "ruleGameButton":
-//				
-//				break;
 			case "exitGameButton":
 				
 				menu.setVisible(false);

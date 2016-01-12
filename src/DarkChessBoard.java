@@ -1,4 +1,6 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -12,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class DarkChessBoard extends ChessBoard implements ActionListener {
-	JFrame DarkBoard;
 
 	JPanel centerBoard;
 	JPanel playerPanel;
@@ -23,18 +24,22 @@ public class DarkChessBoard extends ChessBoard implements ActionListener {
 	JLabel nowIsWhoLabel;
 
 	DarkChess darkChess;
+	DarkChess deadDarkChess;
 
-	JButton[] button = new JButton[32];
+	int[] colorArray;
+	int[] chessIDArray;
+	
 
 	public static final int X = 600;
-	public static final int Y = 400;
-
-	public static final int BLACK = 0;
-	public static final int RED = 1;
+	public static final int Y = 450;
 
 	public static final int PLAYER1 = 0;
 	public static final int PLAYER2 = 1;
 	public static final int PLAYER_TOTAL = 2;
+
+	public static final int NO_PEOPLE_WIN = 0;
+	public static final int BLACK_WIN = 1;
+	public static final int RED_WIN = 2;
 
 	public final int NORMAL_RULE = 0;
 	public final int CANNON_RULE = 1;
@@ -52,140 +57,153 @@ public class DarkChessBoard extends ChessBoard implements ActionListener {
 
 	int NowPlayer = PLAYER1;
 	int NextPlayer = PLAYER2;
-	int[] playerColor = new int[PLAYER_TOTAL];
 
 	boolean changePlayer = false;
 
 	public DarkChessBoard() {
+
+		button = new JButton[32];
+		colorArray = new int[32];
+		chessIDArray = new int[32];
+
+		player = new Player[PLAYER_TOTAL];
+		player[0] = new Player();
+		player[1] = new Player();
+		
 		setElement();
 		addElement();
 		visibleElement();
-
-		darkChess = new DarkChess();
 	}
 
-	void showEatenChess() {
-
+	public void setChess(Chess chess) {
+		this.darkChess = (DarkChess) chess;
+		createDarkChess();
+		randDarkChess();
 	}
 
-	void checkCanEat() {
+	public void createDarkChess() {
 
+		darkChess.chessarrays = new DarkChess[darkChess.chessName.length];
+
+		for (int i = 0; i < darkChess.chessName.length; i++) {
+			darkChess.chessarrays[i] = new DarkChess();
+
+			darkChess.chessarrays[i].chess_ID = i;
+			darkChess.chessarrays[i].isOpen = false;
+			darkChess.chessarrays[i].name = darkChess.chessName[i];
+			darkChess.chessarrays[i].weight = darkChess.chessWeight[i];
+
+			if (i >= 0 && i <= 15) {
+				darkChess.chessarrays[i].color = Chess.BLACK;
+			}
+			if (i >= 16 && i <= 31) {
+				darkChess.chessarrays[i].color = Chess.RED;
+			}
+		}
+		deadDarkChess = new DarkChess();
+		deadDarkChess.chess_ID = Chess.EMPTY;
+		deadDarkChess.isOpen = true; //被打開了才有死的可能
+		deadDarkChess.name = "死";
+		deadDarkChess.weight = Chess.EMPTY;
+		deadDarkChess.color = Chess.EMPTY;
+
+		
+		// weight = new int[] { 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 7, 7, 7,
+		// 1,
+		// 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 7, 7, 7 };
+	}
+
+	public void randDarkChess() {
+		for (int i = 0; i < 32; i++) {
+			int number;
+			number = (int) (Math.random() * 32); // 0~32
+
+			DarkChess temp2;
+			temp2 = darkChess.chessarrays[i];
+			darkChess.chessarrays[i] = darkChess.chessarrays[number];
+			darkChess.chessarrays[number] = temp2;
+		}
 	}
 
 	private void printChess() {
-		// for (int i = 0; i < 32; i++) {
-		// System.out.print(darkChess.weight[i] + " ");
-		//
-		// if ((i + 1) % 8 == 0) {
-		// System.out.println("");
-		// }
-		// }
-		//
 		for (int i = 0; i < 32; i++) {
-
-			if (darkChess.chessarrays[i] == DarkChess.EMPTY) {
-				button[i].setIcon(null);
-			} else {
-				if (darkChess.isOpen[i] == true) {
-					switch (darkChess.chessarrays[i]) {
-					case 0:
-						button[i]
-								.setIcon(new ImageIcon("./image/Black_01.png"));
-						break;
-					case 1:
-					case 2:
-						button[i]
-								.setIcon(new ImageIcon("./image/Black_02.png"));
-						break;
-					case 3:
-					case 4:
-						button[i]
-								.setIcon(new ImageIcon("./image/Black_03.png"));
-						break;
-					case 5:
-					case 6:
-						button[i]
-								.setIcon(new ImageIcon("./image/Black_04.png"));
-						break;
-					case 7:
-					case 8:
-						button[i]
-								.setIcon(new ImageIcon("./image/Black_05.png"));
-						break;
-					case 9:
-					case 10:
-						button[i]
-								.setIcon(new ImageIcon("./image/Black_06.png"));
-						break;
-					case 11:
-					case 12:
-					case 13:
-					case 14:
-					case 15:
-						button[i]
-								.setIcon(new ImageIcon("./image/Black_07.png"));
-						break;
-					case 16:
-						button[i].setIcon(new ImageIcon("./image/Red_01.png"));
-						break;
-					case 17:
-					case 18:
-						button[i].setIcon(new ImageIcon("./image/Red_02.png"));
-						break;
-					case 19:
-					case 20:
-						button[i].setIcon(new ImageIcon("./image/Red_03.png"));
-						break;
-					case 21:
-					case 22:
-						button[i].setIcon(new ImageIcon("./image/Red_04.png"));
-						break;
-					case 23:
-					case 24:
-						button[i].setIcon(new ImageIcon("./image/Red_05.png"));
-						break;
-					case 25:
-					case 26:
-						button[i].setIcon(new ImageIcon("./image/Red_06.png"));
-						break;
-					case 27:
-					case 28:
-					case 29:
-					case 30:
-					case 31:
-						button[i].setIcon(new ImageIcon("./image/Red_07.png"));
-						break;
-					}
+			if (darkChess.chessarrays[i].isOpen == true) {
+				switch (darkChess.chessarrays[i].name) {
+				case "將":
+					button[i].setIcon(new ImageIcon("./Black_01.png"));
+					break;
+				case "士":
+					button[i].setIcon(new ImageIcon("./Black_02.png"));
+					break;
+				case "象":
+					button[i].setIcon(new ImageIcon("./Black_03.png"));
+					break;
+				case "車":
+					button[i].setIcon(new ImageIcon("./Black_04.png"));
+					break;
+				case "馬":
+					button[i].setIcon(new ImageIcon("./Black_05.png"));
+					break;
+				case "包":
+					button[i].setIcon(new ImageIcon("./Black_06.png"));
+					break;
+				case "卒":
+					button[i].setIcon(new ImageIcon("./Black_07.png"));
+					break;
+				case "帥":
+					button[i].setIcon(new ImageIcon("./Red_01.png"));
+					break;
+				case "仕":
+					button[i].setIcon(new ImageIcon("./Red_02.png"));
+					break;
+				case "相":
+					button[i].setIcon(new ImageIcon("./Red_03.png"));
+					break;
+				case "俥":
+					button[i].setIcon(new ImageIcon("./Red_04.png"));
+					break;
+				case "傌":
+					button[i].setIcon(new ImageIcon("./Red_05.png"));
+					break;
+				case "炮":
+					button[i].setIcon(new ImageIcon("./Red_06.png"));
+					break;
+				case "兵":
+					button[i].setIcon(new ImageIcon("./Red_07.png"));
+					break;
+				case "死":
+					button[i].setIcon(null);
+					break;
 				}
 			}
 		}
-
 	}
 
 	public void setElement() {
-		DarkBoard = new JFrame("DarkChess");
-		DarkBoard.setSize(new Dimension(X, Y));
-		DarkBoard.setLayout(new BorderLayout());
-		DarkBoard.setResizable(false);
-		DarkBoard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		DarkBoard.setLocationRelativeTo(null);
+		chessGame = new JFrame("DarkChess");
+		chessGame.setSize(new Dimension(X, Y));
+		chessGame.setLayout(new BorderLayout());
+		chessGame.setResizable(false);
+		chessGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		chessGame.setLocationRelativeTo(null);
 
 		centerBoard = new JPanel();
 		centerBoard.setLayout(new GridLayout(4, 8, 0, 0));
 
 		for (int i = 0; i < button.length; i++) {
 			button[i] = new JButton();
-			button[i].setIcon(new ImageIcon("./image/backChess.jpg"));
+			button[i].setIcon(new ImageIcon("./backChess.jpg"));
+			button[i].setBackground(Color.white);
 			button[i].setActionCommand("" + i);
 			button[i].addActionListener(this);
 		}
 
 		playerPanel = new JPanel();
 		playerPanel.setLayout(new BorderLayout());
-		
+
 		centerPanel = new JPanel();
-		centerPanel.setLayout(new GridLayout(1,6,0,0));
-		
+		centerPanel.setLayout(new GridLayout(1, 6, 0, 0));
+
 		player1Label = new JLabel("Player1");
 		player1Label.setFont(new Font(null, Font.PLAIN, 23));
 
@@ -193,8 +211,7 @@ public class DarkChessBoard extends ChessBoard implements ActionListener {
 		player2Label.setFont(new Font(null, Font.PLAIN, 23));
 
 		nowIsWhoLabel = new JLabel("←");
-		nowIsWhoLabel.setFont(new Font(null, Font.PLAIN, 23));
-
+		nowIsWhoLabel.setFont(new Font(null, Font.PLAIN, 50));
 	}
 
 	public void addElement() {
@@ -202,32 +219,31 @@ public class DarkChessBoard extends ChessBoard implements ActionListener {
 			centerBoard.add(button[i]);
 		}
 
-		//排版
+		// 排版
 		centerPanel.add(new JPanel());
 		centerPanel.add(new JPanel());
 		centerPanel.add(new JPanel());
 		centerPanel.add(nowIsWhoLabel);
 		centerPanel.add(new JPanel());
 		centerPanel.add(new JPanel());
-		
+
 		playerPanel.add(player1Label, BorderLayout.WEST);
 		playerPanel.add(centerPanel, BorderLayout.CENTER);
 		playerPanel.add(player2Label, BorderLayout.EAST);
 
-		DarkBoard.add(playerPanel, BorderLayout.NORTH);
-		DarkBoard.add(centerBoard, BorderLayout.CENTER);
+		chessGame.add(playerPanel, BorderLayout.NORTH);
+		chessGame.add(centerBoard, BorderLayout.CENTER);
 	}
 
 	public void visibleElement() {
-		DarkBoard.setVisible(true);
+		chessGame.setVisible(true);
 	}
 
-	public int getColor(int temp) {
-		// System.out.println(darkChess.chessarrays[temp]/16);
-		if (darkChess.chessarrays[temp] == DarkChess.EMPTY) {
-			return DarkChess.EMPTY;
-		} else {
-			return darkChess.chessarrays[temp] / 16 == 0 ? BLACK : RED;
+	public void getInformationArray() {
+		for (int i = 0; i < darkChess.chessarrays.length; i++) 
+		{
+			colorArray[i] = darkChess.chessarrays[i].color;
+			chessIDArray[i] = darkChess.chessarrays[i].chess_ID;
 		}
 	}
 
@@ -289,31 +305,45 @@ public class DarkChessBoard extends ChessBoard implements ActionListener {
 			case "橫線":
 				if (distance > 0) {
 					for (int i = firstPosition - 1; i > secondPosition; i--) {
-						if (darkChess.chessarrays[i] != DarkChess.EMPTY) {
+						if (darkChess.chessarrays[i].chess_ID != Chess.EMPTY) {
 							count++;
 						}
 					}
 				} else if (distance < 0) {
 					for (int i = firstPosition + 1; i < secondPosition; i++) {
-						if (darkChess.chessarrays[i] != DarkChess.EMPTY) {
+						if (darkChess.chessarrays[i].chess_ID != Chess.EMPTY) {
 							count++;
 						}
 					}
 				} else {
-					System.out.println("出現bug");
+//					System.out.println("出現bug");
+
+					printWarning("出現Bug!");
 				}
 				break;
 			case "直線":
 				if (distance > 0) {
-
+					for (int i = firstPosition - 8; i > secondPosition; i = i - 8) {
+						if (darkChess.chessarrays[i].chess_ID != Chess.EMPTY) {
+							count++;
+						}
+					}
 				} else if (distance < 0) {
-
+					for (int i = firstPosition + 8; i < secondPosition; i = i + 8) {
+						if (darkChess.chessarrays[i].chess_ID != Chess.EMPTY) {
+							count++;
+						}
+					}
 				} else {
-					System.out.println("出現bug");
+//					System.out.println("出現bug");
+
+					printWarning("出現Bug!");
 				}
 				break;
 			default:
-				System.out.println("出現bug");
+//				System.out.println("出現bug");
+
+				printWarning("出現Bug!");
 			}
 
 			if (count == 1) {
@@ -325,69 +355,117 @@ public class DarkChessBoard extends ChessBoard implements ActionListener {
 	}
 
 	private void normalRule() {
-		// System.out.println("firstTemp:" + firstTemp);
 		if (checkBeside(beforeClickButton, clickBoutton)) {
-			if (darkChess.weight[beforeClickButton] <= darkChess.weight[clickBoutton])// 越小越大
+			if (darkChess.chessarrays[beforeClickButton].weight <= darkChess.chessarrays[clickBoutton].weight) 
 			{
 				darkChess.chessarrays[clickBoutton] = darkChess.chessarrays[beforeClickButton];
-				darkChess.weight[clickBoutton] = darkChess.weight[beforeClickButton];
-				darkChess.chessarrays[beforeClickButton] = DarkChess.EMPTY;
-				darkChess.weight[beforeClickButton] = DarkChess.EMPTY;
+
+				darkChess.chessarrays[beforeClickButton] = deadDarkChess;
+				
 				changePlayer = true;
-				System.out.println("可以吃");
-			} else {
-				System.out.println("敵人的階級比你高");
+//				System.out.println("可以吃");
 			}
-		} else {
-			System.out.println("請點擊周遭的棋子");
+			else
+			{
+//				System.out.println("無法吃階級比你大的人");
+
+				printWarning("無法吃階級比你大的人");
+			}
+		} 
+		else 
+		{
+//			System.out.println("請點擊周遭的棋子");
+			printWarning("請點擊周遭的旗子");
 		}
 	}
 
 	private void cannonRule() {
 		if (checkCannonCanFire(beforeClickButton, clickBoutton) == true) {
+			
 			darkChess.chessarrays[clickBoutton] = darkChess.chessarrays[beforeClickButton];
-			darkChess.weight[clickBoutton] = darkChess.weight[beforeClickButton];
-			darkChess.chessarrays[beforeClickButton] = DarkChess.EMPTY;
-			darkChess.weight[beforeClickButton] = DarkChess.EMPTY;
+
+			darkChess.chessarrays[beforeClickButton] = deadDarkChess;
+
 			changePlayer = true;
-			System.out.println("可以吃");
+//			System.out.println("可以吃");
 		} else {
-			System.out.println("無法攻擊");
+//			System.out.println("無法攻擊");
+			printWarning("無法攻擊");
 		}
 	}
 
 	private void soldierRule() {
-		normalRule();
-
-		if (darkChess.weight[clickBoutton] == 1) {
+		if (darkChess.chessarrays[clickBoutton].weight == 1) {
 			darkChess.chessarrays[clickBoutton] = darkChess.chessarrays[beforeClickButton];
-			darkChess.weight[clickBoutton] = darkChess.weight[beforeClickButton];
-			darkChess.chessarrays[beforeClickButton] = DarkChess.EMPTY;
-			darkChess.weight[beforeClickButton] = DarkChess.EMPTY;
+
+			darkChess.chessarrays[beforeClickButton] = deadDarkChess;
+
 			changePlayer = true;
-			System.out.println("可以吃");
+//			System.out.println("可以吃");
+		}
+		else
+		{
+			normalRule();
 		}
 	}
 
 	private void kingRule() {
-		if (darkChess.weight[clickBoutton] == 7) {
+		if (darkChess.chessarrays[clickBoutton].weight == 7) {
 			changePlayer = false;
-			System.out.println("王不能吃兵");
+//			System.out.println("王不能吃兵");
+			printWarning("王不能吃兵");
 		} else {
 			normalRule();
 		}
 	}
 
+	private int checkEndGame() {
+		boolean haveRed, haveBlack, haveDark;
+
+		haveRed = false;
+		haveBlack = false;
+		haveDark = false;
+
+		for (int i = 0; i < darkChess.chessarrays.length; i++) {
+			if (darkChess.chessarrays[i].chess_ID >= 16
+					&& darkChess.chessarrays[i].chess_ID <= 31) // 16~31
+			{
+				haveRed = true;
+			}
+			if (darkChess.chessarrays[i].chess_ID <= 15
+					&& darkChess.chessarrays[i].chess_ID >= 0) // 0~15
+			{
+				haveBlack = true;
+			}
+			if (darkChess.chessarrays[i].isOpen == false) {
+				haveDark = true;
+			}
+		}
+
+		if (haveRed == false && haveDark == false) {
+			return BLACK_WIN;
+		}
+		if (haveBlack == false && haveDark == false) {
+			return RED_WIN;
+		}
+		return NO_PEOPLE_WIN;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
+	
+	
 		clickBoutton = Integer.parseInt(arg0.getActionCommand());
+	
+		// 更新陣列資訊
+		getInformationArray();
 
 		// 設定玩家的顏色
 		if (firstOpen == false) {
-			if (getColor(clickBoutton) == BLACK) {
-				playerColor[NowPlayer] = BLACK;
-				playerColor[NextPlayer] = RED;
+			if (colorArray[clickBoutton] == Chess.BLACK) {
+				player[NowPlayer].color = Chess.BLACK;
+				player[NextPlayer].color = Chess.RED;
 
 				switch (NowPlayer) {
 				case PLAYER1:
@@ -400,8 +478,8 @@ public class DarkChessBoard extends ChessBoard implements ActionListener {
 					break;
 				}
 			} else {
-				playerColor[NowPlayer] = RED;
-				playerColor[NextPlayer] = BLACK;
+				player[NowPlayer].color = Chess.RED;
+				player[NextPlayer].color = Chess.BLACK;
 
 				switch (NowPlayer) {
 
@@ -419,68 +497,75 @@ public class DarkChessBoard extends ChessBoard implements ActionListener {
 			firstOpen = true;
 		}
 
-		// System.out.println(playerColor[NowPlayer]);
-
 		switch (clickConut) {
 		case 0:
-			if (darkChess.isOpen[clickBoutton] == false) // 翻棋
+			if (darkChess.chessarrays[clickBoutton].isOpen == false) 
 			{
-				darkChess.isOpen[clickBoutton] = true;
+				darkChess.chessarrays[clickBoutton].isOpen = true;
 				changePlayer = true;
-				System.out.println("翻棋");
-			} else // 點別的棋子
+//				System.out.println("翻棋");
+			} 
+			else // 點別的棋子
 			{
-				if (getColor(clickBoutton) == playerColor[NowPlayer])// 自己的棋子，判斷有後續動作
+				if (colorArray[clickBoutton] == player[NowPlayer].color)// 自己的棋子，判斷有後續動作
 				{
-					System.out.println("自己的棋子，有後續動作");
+//					System.out.println("自己的棋子，有後續動作");
 					beforeClickButton = clickBoutton; // 儲存哪個棋子被點
-
-					switch (DarkChess.chessName[darkChess.chessarrays[clickBoutton]]) {
+					// DarkChess.chessName[darkChess.chessarrays[clickBoutton]]
+					switch (darkChess.chessarrays[clickBoutton].name) {
 					// 得到自己的棋子是甚麼棋
 					case "將":
 					case "帥":
-						System.out.println("啟動王的特殊規則");
+//						System.out.println("啟動王的特殊規則");
 						specialRuleFlag = KING_RULE;
 						break;
 					case "包":
 					case "炮":
-						System.out.println("啟動炮的特殊規則");
+//						System.out.println("啟動炮的特殊規則");
 						specialRuleFlag = CANNON_RULE;
 						break;
 					case "卒":
 					case "兵":
-						System.out.println("啟動兵的特殊規則");
+//						System.out.println("啟動兵的特殊規則");
 						specialRuleFlag = SOLDIER_RULE;
 						break;
 					default:
-						System.out.println("使用普通規則");
+//						System.out.println("使用普通規則");
 						specialRuleFlag = NORMAL_RULE;
 						break;
 					}
 
 					clickConut++;
-				} else if (getColor(clickBoutton) == playerColor[NextPlayer])// 別人的棋子
+				} 
+				else if (colorArray[clickBoutton] == player[NextPlayer].color)// 別人的棋子
+				{
+					printWarning("不是你的回合");
+				} 
+				else if (colorArray[clickBoutton] == DarkChess.EMPTY)// 空白格子
 				{
 
-				} else if (getColor(clickBoutton) == DarkChess.EMPTY)// 空白格子
+				} 
+				else 
 				{
-
-				} else {
-					System.out.println("Bug出現");
+//					System.out.println("Bug出現");
 				}
 			}
 			break;
 		case 1:
-			if (darkChess.isOpen[clickBoutton] == false) // 如果還沒翻開
+			// darkChess.isOpen[clickBoutton]
+			if (darkChess.chessarrays[clickBoutton].isOpen == false) // 如果還沒翻開
 			{
-				System.out.println("未翻開，取消動作");
+//				System.out.println("未翻開，取消動作");
+				printWarning("未翻開，取消動作");
 			} else // 點別的棋子
 			{
 
-				if (getColor(clickBoutton) == playerColor[NowPlayer])// 自己的棋子
+				if (colorArray[clickBoutton] == player[NowPlayer].color)// 自己的棋子
 				{
-					System.out.println("不能吃自己的棋，取消動作");
-				} else if (getColor(clickBoutton) == playerColor[NextPlayer])// 別人的棋子
+//					System.out.println("不能吃自己的棋，取消動作");
+					printWarning("不能吃自己的棋，取消動作");
+				} 
+				else if (colorArray[clickBoutton] == player[NextPlayer].color)// 別人的棋子
 				{
 					switch (specialRuleFlag) {
 					case NORMAL_RULE:
@@ -497,15 +582,16 @@ public class DarkChessBoard extends ChessBoard implements ActionListener {
 						break;
 					}
 
-				} else if (getColor(clickBoutton) == DarkChess.EMPTY) {
+				} else if (colorArray[clickBoutton] == DarkChess.EMPTY) {
 					darkChess.chessarrays[clickBoutton] = darkChess.chessarrays[beforeClickButton];
-					darkChess.weight[clickBoutton] = darkChess.weight[beforeClickButton];
-					darkChess.chessarrays[beforeClickButton] = DarkChess.EMPTY;
-					darkChess.weight[beforeClickButton] = DarkChess.EMPTY;
+
+					darkChess.chessarrays[beforeClickButton] = deadDarkChess;
+
 					changePlayer = true;
-					System.out.println("往空地移動");
+//					System.out.println("往空地移動");
 				} else {
-					System.out.println("Bug出現");
+//					System.out.println("Bug出現");
+					printWarning("Bug出現");
 				}
 
 			}
@@ -520,21 +606,38 @@ public class DarkChessBoard extends ChessBoard implements ActionListener {
 
 		// 換人
 		if (changePlayer == true) {
-			switch (NowPlayer) {
-			case PLAYER1:
-				NowPlayer = PLAYER2;
-				NextPlayer = PLAYER1;
-				changePlayer = false;
-				System.out.println("現在輪到玩家2");
-				nowIsWhoLabel.setText("→");
-				break;
-			case PLAYER2:
-				NowPlayer = PLAYER1;
-				NextPlayer = PLAYER2;
-				changePlayer = false;
-				System.out.println("現在輪到玩家1");
-				nowIsWhoLabel.setText("←");
-				break;
+
+			if (checkEndGame() == RED_WIN) 
+			{
+//				System.out.println("紅方勝利");
+				printwinner(Chess.RED);
+			} 
+			else if (checkEndGame() == BLACK_WIN) 
+			{
+//				System.out.println("黑方勝利");
+				printwinner(Chess.BLACK);
+			} 
+			else if (checkEndGame() == NO_PEOPLE_WIN) 
+			{
+				switch (NowPlayer) {
+				case PLAYER1:
+					NowPlayer = PLAYER2;
+					NextPlayer = PLAYER1;
+					changePlayer = false;
+//					System.out.println("現在輪到玩家2");
+					nowIsWhoLabel.setText("→");
+					break;
+				case PLAYER2:
+					NowPlayer = PLAYER1;
+					NextPlayer = PLAYER2;
+					changePlayer = false;
+//					System.out.println("現在輪到玩家1");
+					nowIsWhoLabel.setText("←");
+					break;
+				}
+			} else {
+//				System.out.println("程式出現bug");
+				printWarning("出現bug");
 			}
 		}
 	}
